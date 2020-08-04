@@ -8,7 +8,8 @@ In this simple RPG game, the hero fights the goblin. He has the options to:
 """
 
 class Fighter:
-    def __init__(self, health, power):
+    def __init__(self, name, health, power):
+        self.name = name
         self.health = health
         self.power = power
 
@@ -17,21 +18,21 @@ class Fighter:
 
 
 class Hero(Fighter):
-    def __init__(self, health, power):
-        super().__init__(health, power)
+    def __init__(self, name, health, power):
+        super().__init__(name, health, power)
 
 
 class Goblin(Fighter):
-    def __init__(self, health, power):
-        super().__init__(health, power)
+    def __init__(self, name, health, power):
+        super().__init__(name, health, power)
 
-hiro = Hero(10, 5)
-spike = Goblin(6, 2)
+hiro = Hero("Hiro", 10, 5)
+spike = Goblin("Spike", 6, 2)
 
 def main():
     while spike.health > 0 and hiro.health > 0:
-        print(hiro.status)
-        print(spike.status)
+        print(hiro.status())
+        print(spike.status())
         print()
         print("What do you want to do?")
         print("1. fight goblin")
