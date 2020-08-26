@@ -32,6 +32,10 @@ class Character:
             self.name = "Shadow"
             self.health = 1
             self.power = 2
+        elif self.type_char == "wizard":
+            self.name = "Wizard"
+            self.health = 5
+            self.power = 5
         self.print_health_power()
     
     def __str__(self):
@@ -62,17 +66,24 @@ class Character:
         if other_char.alive():
             print("The %s's health is now %d" % (other_char.name, other_char.health))
         else:
-            print("The %s is dead." % (other_char.name))
+            # 40% chance that the wizard can ressurect himself
+            if other_char.name == "Wizard":
+                if random.random() <= 0.4:
+                    other_char.health = 5
+                    print("The %s was dead, but casted a ressurection spell before the attack was landed." % (other_char.name))
+                    print("The %s's health is now %d" % (other_char.name, other_char.health))
+            else:
+                print("The %s is dead." % (other_char.name))
 
     def print_health_power(self):
         print("\nThe %s char has %d health and %d power." % (self.name, self.health, self.power))
     
     def alive(self):
-        if self.name != "Zombie":
+        if self.name == "Zombie":
+            return True
+        else:
             if self.health > 0:
                 return True
-        else:
-            return True
 
 class Hero(Character):
     def __init__(self):
@@ -94,19 +105,23 @@ class Shadow(Character):
     def __init__(self):
         Character.__init__(self, "shadow")
 
+class Wizard(Character):
+    def __init__(self):
+        Character.__init__(self, "wizard")
+
 # def char_select():
 
 def main():
     while True:
         mode = input('\nZombie mode(yes, or no)?\n> ').lower()
-        harry = Shadow()
+        harry = Hero()
         # if user wants to play in zombie mode, the dobby is assigned the instance of the zombie class
         if mode == 'yes':
             dobby = Zombie()
             break
         # if user doesn't want to play in zombie mode, then dobby is assigned the instance of the goblin class
         elif mode == 'no':
-            dobby = Goblin()
+            dobby = Wizard()
             break
         else:
             print("Invalid input %r" % mode)
