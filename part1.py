@@ -62,9 +62,11 @@ def main():
     while True:
         mode = input('\nZombie mode(yes, or no)?\n> ').lower()
         harry = Hero()
+        # if user wants to play in zombie mode, the dobby is assigned the instance of the zombie class
         if mode == 'yes':
             dobby = Zombie()
             break
+        # if user doesn't want to play in zombie mode, then dobby is assigned the instance of the goblin class
         elif mode == 'no':
             dobby = Goblin()
             break
