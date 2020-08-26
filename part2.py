@@ -28,6 +28,10 @@ class Character:
             self.name = "Medic"
             self.health = 10
             self.power = 1
+        elif self.type_char == "shadow":
+            self.name = "Shadow"
+            self.health = 1
+            self.power = 2
         self.print_health_power()
     
     def __str__(self):
@@ -40,12 +44,20 @@ class Character:
             if random.random() <= 0.2: # random.random() returns a value between 0.0 and 1.0
                 power = power * 2
                 print('\nDouble power mode!')
-        other_char.health -= power
-        print("\n%s does %d damage to the %s." % (self.name, power, other_char.name))
+        if other_char.name == "Shadow":
+            if random.random() <= 0.1:
+                other_char.health -= power
+                print("\n%s does %d damage to the %s." % (self.name, power, other_char.name))
+            else:
+                print("\n%s does %d damage to %s, but misses." % (self.name, power, other_char.name))
+        else:
+            other_char.health -= power
+            print("\n%s does %d damage to the %s." % (self.name, power, other_char.name))
         if other_char.name == "Medic":
             if random.random() <= 0.2:
                 other_char.health += 2
                 print('\nThe medic has healed themselves for 2 points after being attacked.')
+
         
         if other_char.alive():
             print("The %s's health is now %d" % (other_char.name, other_char.health))
@@ -53,7 +65,7 @@ class Character:
             print("The %s is dead." % (other_char.name))
 
     def print_health_power(self):
-        print("\nThe %s has %d health and %d power." % (self.name, self.health, self.power))
+        print("\nThe %s char has %d health and %d power." % (self.name, self.health, self.power))
     
     def alive(self):
         if self.name != "Zombie":
@@ -77,6 +89,10 @@ class Zombie(Character):
 class Medic(Character):
     def __init__(self):
         Character.__init__(self, "medic")
+
+class Shadow(Character):
+    def __init__(self):
+        Character.__init__(self, "shadow")
 
 # def char_select():
 
