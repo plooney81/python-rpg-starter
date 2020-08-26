@@ -20,7 +20,7 @@ class Character:
             self.power = 2
         elif self.type_char == "zombie":
             self.name = "Zombie"
-            self.health = 500
+            self.health = 1
             self.power = 1
         self.print_health_power()
     
