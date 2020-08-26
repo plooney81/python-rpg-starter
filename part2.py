@@ -40,20 +40,17 @@ class Character:
             if random.random() <= 0.2: # random.random() returns a value between 0.0 and 1.0
                 power = power * 2
                 print('\nDouble power mode!')
-        if other_char.name == "Zombie":
-            print('\n%s attacks %s and does %d damage.' % (self.name, other_char.name, power))
-            print("The %s's health is still %d" % (other_char.name, other_char.health))
+        other_char.health -= power
+        print("\n%s does %d damage to the %s." % (self.name, power, other_char.name))
+        if other_char.name == "Medic":
+            if random.random() <= 0.2:
+                other_char.health += 2
+                print('\nThe medic has healed themselves for 2 points after being attacked.')
+        
+        if other_char.alive():
+            print("The %s's health is now %d" % (other_char.name, other_char.health))
         else:
-            other_char.health -= power
-            print("\n%s does %d damage to the %s." % (self.name, power, other_char.name))
-            if other_char.name == "Medic":
-                if random.random() <= 0.2:
-                    other_char.health += 2
-                    print('\nThe medic has healed for themselves for 2 points after being attacked.')
-            if other_char.alive():
-                print("The %s's health is now %d" % (other_char.name, other_char.health))
-            else:
-                print("The %s is dead." % (other_char.name))
+            print("The %s is dead." % (other_char.name))
 
     def print_health_power(self):
         print("\nThe %s has %d health and %d power." % (self.name, self.health, self.power))
@@ -81,10 +78,12 @@ class Medic(Character):
     def __init__(self):
         Character.__init__(self, "medic")
 
+# def char_select():
+
 def main():
     while True:
         mode = input('\nZombie mode(yes, or no)?\n> ').lower()
-        harry = Hero()
+        harry = Medic()
         # if user wants to play in zombie mode, the dobby is assigned the instance of the zombie class
         if mode == 'yes':
             dobby = Zombie()
