@@ -49,7 +49,7 @@ class Character:
                 other_char.health -= power
                 print("\n%s does %d damage to the %s." % (self.name, power, other_char.name))
             else:
-                print("\n%s does %d damage to %s, but misses." % (self.name, power, other_char.name))
+                print("\n%s attempted to do %d damage to %s, but misses." % (self.name, power, other_char.name))
         else:
             other_char.health -= power
             print("\n%s does %d damage to the %s." % (self.name, power, other_char.name))
@@ -99,7 +99,7 @@ class Shadow(Character):
 def main():
     while True:
         mode = input('\nZombie mode(yes, or no)?\n> ').lower()
-        harry = Medic()
+        harry = Shadow()
         # if user wants to play in zombie mode, the dobby is assigned the instance of the zombie class
         if mode == 'yes':
             dobby = Zombie()
