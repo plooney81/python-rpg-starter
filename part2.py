@@ -39,13 +39,17 @@ class Character:
         if self.name == "Hero":
             if random.random() <= 0.2: # random.random() returns a value between 0.0 and 1.0
                 power = power * 2
-
+                print('\nDouble power mode!')
         if other_char.name == "Zombie":
-            print('\n%s attacks %s and does 0 damage.' % (self.name, other_char.name))
+            print('\n%s attacks %s and does %d damage.' % (self.name, other_char.name, power))
             print("The %s's health is still %d" % (other_char.name, other_char.health))
         else:
             other_char.health -= power
             print("\n%s does %d damage to the %s." % (self.name, power, other_char.name))
+            if other_char.name == "Medic":
+                if random.random() <= 0.2:
+                    other_char.health += 2
+                    print('\nThe medic has healed for themselves for 2 points after being attacked.')
             if other_char.alive():
                 print("The %s's health is now %d" % (other_char.name, other_char.health))
             else:
@@ -55,7 +59,10 @@ class Character:
         print("\nThe %s has %d health and %d power." % (self.name, self.health, self.power))
     
     def alive(self):
-        if self.health > 0:
+        if self.name != "Zombie":
+            if self.health > 0:
+                return True
+        else:
             return True
 
 class Hero(Character):
