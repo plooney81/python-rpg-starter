@@ -36,6 +36,11 @@ class Character:
             self.name = "Wizard"
             self.health = 5
             self.power = 5
+        elif self.type_char == "monk":
+            self.name = "Monk"
+            self.health = 12
+            self.power = 0
+            self.phrase = "No matter what you do, I will not fight back"
         self.print_health_power()
     
     def __str__(self):
@@ -62,9 +67,12 @@ class Character:
                 other_char.health += 2
                 print('\nThe medic has healed themselves for 2 points after being attacked.')
 
+
         
         if other_char.alive():
-            print("The %s's health is now %d" % (other_char.name, other_char.health))
+            print("\nThe %s's health is now %d" % (other_char.name, other_char.health))
+            if other_char.name == "Monk":
+                print('%s - %s' % (other_char.name, other_char.phrase))
         else:
             # 40% chance that the wizard can ressurect himself
             if other_char.name == "Wizard":
@@ -109,6 +117,10 @@ class Wizard(Character):
     def __init__(self):
         Character.__init__(self, "wizard")
 
+class Monk(Character):
+    def __init__(self):
+        Character.__init__(self, "monk")
+
 # def char_select():
 
 def main():
@@ -121,7 +133,7 @@ def main():
             break
         # if user doesn't want to play in zombie mode, then dobby is assigned the instance of the goblin class
         elif mode == 'no':
-            dobby = Wizard()
+            dobby = Monk()
             break
         else:
             print("Invalid input %r" % mode)
