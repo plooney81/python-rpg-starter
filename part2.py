@@ -133,7 +133,7 @@ def main():
             break
         # if user doesn't want to play in zombie mode, then dobby is assigned the instance of the goblin class
         elif mode == 'no':
-            dobby = Monk()
+            dobby = Goblin()
             break
         else:
             print("Invalid input %r" % mode)
