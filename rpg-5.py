@@ -156,7 +156,7 @@ class Battle(object):
                 continue
             enemy.attack(hero)
         if hero.alive():
-            print("You defeated the %s" % enemy.name)
+            print("You defeated the %s and recieved their bounty of %d coins" % (enemy.name, enemy.bounty))
             hero.coins += enemy.bounty
             return True
         else:
