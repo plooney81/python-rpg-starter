@@ -27,17 +27,17 @@ class Character:
     def __str__(self):
         return 'C(%s) : H(%d) : P(%d)' % (self.name, self.health, self.power)
 
-    def attack(self, other_char):
-        if other_char.name == "Zombie":
-            print('\n%s attacks %s and does 0 damage.' % (self.name, other_char.name))
-            print("The %s's health is still %d" % (other_char.name, other_char.health))
+    def attack(self, enemy):
+        if enemy.name == "Zombie":
+            print('\n%s attacks %s and does 0 damage.' % (self.name, enemy.name))
+            print("The %s's health is still %d" % (enemy.name, enemy.health))
         else:
-            other_char.health -= self.power
-            print("\n%s does %d damage to the %s." % (self.name, self.power, other_char.name))
-            if other_char.alive():
-                print("The %s's health is now %d" % (other_char.name, other_char.health))
+            enemy.health -= self.power
+            print("\n%s does %d damage to the %s." % (self.name, self.power, enemy.name))
+            if enemy.alive():
+                print("The %s's health is now %d" % (enemy.name, enemy.health))
             else:
-                print("The %s is dead." % (other_char.name))
+                print("The %s is dead." % (enemy.name))
 
     def print_health_power(self):
         print("\nThe %s has %d health and %d power." % (self.name, self.health, self.power))
