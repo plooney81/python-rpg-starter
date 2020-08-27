@@ -10,6 +10,9 @@ class Character(object):
         self.health = 10
         self.power = 5
         self.coins = 20
+    
+    def __str__(self):
+        print(f'{self.name} has {self.health} health and {self.power} power')
 
     def alive(self):
         return self.health > 0
@@ -46,17 +49,31 @@ class Hero(Character):
         self.coins -= item.cost
         item.apply(hero)
 
+    def attack(self, enemy):
+        power = self.power
+        # 20 percent chance the hero does double power
+        if random.random() <= 0.2: # random.random() returns a value between 0.0 and 1.0
+            power = power * 2
+            print('\nDouble power mode!')
+        if not self.alive():
+            return
+        print("%s attacks %s" % (self.name, enemy.name))
+        enemy.receive_damage(power)
+        time.sleep(1.5)
+
 class Goblin(Character):
     def __init__(self):
         self.name = 'goblin'
         self.health = 6
         self.power = 2
+        self.bounty = 5
 
 class Wizard(Character):
     def __init__(self):
         self.name = 'wizard'
         self.health = 8
         self.power = 1
+        self.bounty = 6
 
     def attack(self, enemy):
         swap_power = random.random() > 0.5
@@ -66,6 +83,50 @@ class Wizard(Character):
         super(Wizard, self).attack(enemy)
         if swap_power:
             self.power, enemy.power = enemy.power, self.power
+
+class Medic(Character):
+    def __init__(self):
+        self.name = 'medic'
+        self.health = 10
+        self.power = 1
+    
+    # medic has a 20% chance he can recuperate 2 health points
+    def receive_damage(self, points):
+        self.health -= points
+        print("%s received %d damage." % (self.name, points))
+        if random.random() <= 0.2: # random.random() returns a value between 0.0 and 1.0
+            self.health += 2
+            print('\nThe medic has rejuvinated himself for 2 health points')
+        if self.health <= 0:
+            print("%s is dead." % self.name)
+
+
+class Shadow(Character):
+    def __init__(self):
+        self.name = 'shadow'
+        self.health = 10
+        self.power = 1
+        self.bounty = 50
+    
+    # shadow has a 10 percent chance that he doesn't take any damage
+    def receive_damage(self, points):
+        if random.random() >= 0.10:
+            print('Shadow dodged the move')
+        else:
+            self.health -= points
+            print("%s received %d damage." % (self.name, points))
+            if self.health <= 0:
+                print("%s is dead." % self.name)
+
+class Zombie(Character):
+    def __init__(self):
+        self.name = 'zombie'
+        self.health = 4
+        self.power = 2
+        self.bounty = 10000000
+    
+    def alive(self):
+        return True
 
 class Battle(object):
     def do_battle(self, hero, enemy):
@@ -96,6 +157,7 @@ class Battle(object):
             enemy.attack(hero)
         if hero.alive():
             print("You defeated the %s" % enemy.name)
+            hero.coins += enemy.bounty
             return True
         else:
             print("YOU LOSE!")
@@ -140,7 +202,7 @@ class Store(object):
                 hero.buy(item)
 
 hero = Hero()
-enemies = [Goblin(), Wizard()]
+enemies = [Goblin(), Wizard(), Zombie()]
 battle_engine = Battle()
 shopping_engine = Store()
 
